@@ -1,5 +1,7 @@
+// lib/ui/screens/animations/transition.dart
+// (Magatte's file — unchanged)
+
 import 'dart:math';
-import 'package:application_meteo/ui/screens/detail/city_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -23,7 +25,6 @@ class _TransScreenState extends State<Trans1> with TickerProviderStateMixin {
   late AnimationController _progressController;
   late AnimationController _fadeController;
   late Animation<double> _fadeAnimation;
-  late Animation<double> _angleAnimation;
 
   @override
   void initState() {
@@ -41,14 +42,6 @@ class _TransScreenState extends State<Trans1> with TickerProviderStateMixin {
 
     _fadeAnimation =
         Tween<double>(begin: 0.0, end: 1.0).animate(_fadeController);
-
-    _angleAnimation = Tween<double>(
-      begin: pi / 2,
-      end: pi / 2,
-    ).animate(CurvedAnimation(
-      parent: _progressController,
-      curve: Curves.easeInOut,
-    ));
 
     _fadeController.forward();
     _progressController.forward();
@@ -99,32 +92,29 @@ class _TransScreenState extends State<Trans1> with TickerProviderStateMixin {
           opacity: _fadeAnimation,
           child: Center(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: paddingHorizontal),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: paddingHorizontal),
               child: AnimatedBuilder(
                 animation: _progressController,
                 builder: (context, child) {
                   final double barWidth =
                       screenWidth - paddingHorizontal * 2;
-
                   final double planeLeft =
-                  (_progressController.value * barWidth - planeSize / 2)
-                      .clamp(0.0, barWidth - planeSize);
+                      (_progressController.value * barWidth - planeSize / 2)
+                          .clamp(0.0, barWidth - planeSize);
 
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Dakar ➝ ${widget.cityName}",
+                        'Dakar ➝ ${widget.cityName}',
                         style: const TextStyle(
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          letterSpacing: 2,
-                        ),
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            letterSpacing: 2),
                       ),
                       const SizedBox(height: 60),
-
-                      // BARRE + AVION
                       SizedBox(
                         height: planeSize + spacing + barHeight,
                         child: Stack(
@@ -142,7 +132,6 @@ class _TransScreenState extends State<Trans1> with TickerProviderStateMixin {
                                 ),
                               ),
                             ),
-
                             Positioned(
                               bottom: 0,
                               left: 0,
@@ -162,54 +151,37 @@ class _TransScreenState extends State<Trans1> with TickerProviderStateMixin {
                                 ),
                               ),
                             ),
-
                             Positioned(
                               left: planeLeft,
                               top: 0,
                               child: Transform.rotate(
                                 angle: pi / 2,
-                                child: const Icon(
-                                  Icons.flight,
-                                  size: planeSize,
-                                  color: Colors.white,
-                                ),
+                                child: const Icon(Icons.flight,
+                                    size: planeSize, color: Colors.white),
                               ),
                             ),
                           ],
                         ),
                       ),
-
                       const SizedBox(height: 12),
-
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
-                            "Destination",
-                            style: TextStyle(
-                              color: Colors.white70,
-                              fontSize: 16,
-                            ),
-                          ),
-                          Text(
-                            widget.cityName,
-                            style: const TextStyle(
-                              color: Colors.white70,
-                              fontSize: 16,
-                            ),
-                          ),
+                          const Text('Destination',
+                              style: TextStyle(
+                                  color: Colors.white70, fontSize: 16)),
+                          Text(widget.cityName,
+                              style: const TextStyle(
+                                  color: Colors.white70, fontSize: 16)),
                         ],
                       ),
-
                       const SizedBox(height: 40),
-
                       Text(
-                        "${(_progressController.value * 100).toInt()}%",
+                        '${(_progressController.value * 100).toInt()}%',
                         style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
                       ),
                     ],
                   );

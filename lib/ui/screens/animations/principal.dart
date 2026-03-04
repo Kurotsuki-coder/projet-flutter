@@ -1,4 +1,6 @@
-import 'package:application_meteo/ui/screens/main/main_screen.dart';
+// lib/ui/screens/animations/principal.dart
+// (Magatte's file — unchanged)
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -48,7 +50,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     _progressController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        context.go('/main'); // Utilise context.go pour réinitialiser la pile
+        context.go('/main');
       }
     });
   }
@@ -85,48 +87,36 @@ class _SplashScreenState extends State<SplashScreen>
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(
-                  Icons.wb_sunny_rounded,
-                  size: 100,
-                  color: Colors.amber,
-                ),
+                const Icon(Icons.wb_sunny_rounded,
+                    size: 100, color: Colors.amber),
                 const SizedBox(height: 24),
                 const Text(
                   'SenMeteo',
                   style: TextStyle(
-                    fontSize: 36,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    letterSpacing: 2,
-                  ),
+                      fontSize: 36,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      letterSpacing: 2),
                 ),
                 const SizedBox(height: 8),
                 const Text(
                   'Votre météo en temps reel',
                   style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white70,
-                    letterSpacing: 1,
-                  ),
+                      fontSize: 16, color: Colors.white70, letterSpacing: 1),
                 ),
                 const SizedBox(height: 60),
-
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 40),
                   child: AnimatedBuilder(
-                    animation: Listenable.merge([
-                      _progressController,
-                      _cloudFloatController,
-                    ]),
+                    animation: Listenable.merge(
+                        [_progressController, _cloudFloatController]),
                     builder: (context, child) {
                       return LayoutBuilder(
                         builder: (context, constraints) {
                           final barWidth = constraints.maxWidth;
-
                           final tipX = barWidth * _progressController.value;
-
-                          final iconLeft =
-                          (tipX - iconSize / 2).clamp(0.0, barWidth - iconSize);
+                          final iconLeft = (tipX - iconSize / 2)
+                              .clamp(0.0, barWidth - iconSize);
 
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -140,11 +130,9 @@ class _SplashScreenState extends State<SplashScreen>
                                     Positioned(
                                       left: iconLeft,
                                       top: 4 + _cloudFloat.value,
-                                      child: const Icon(
-                                        Icons.cloud,
-                                        size: iconSize,
-                                        color: Colors.white,
-                                      ),
+                                      child: const Icon(Icons.cloud,
+                                          size: iconSize,
+                                          color: Colors.white),
                                     ),
                                   ],
                                 ),
@@ -165,10 +153,12 @@ class _SplashScreenState extends State<SplashScreen>
                                       height: 20,
                                       decoration: BoxDecoration(
                                         color: Colors.amber,
-                                        borderRadius: BorderRadius.circular(50),
+                                        borderRadius:
+                                            BorderRadius.circular(50),
                                         boxShadow: [
                                           BoxShadow(
-                                            color: Colors.amber.withOpacity(0.5),
+                                            color: Colors.amber
+                                                .withOpacity(0.5),
                                             blurRadius: 10,
                                             spreadRadius: 1,
                                           ),
@@ -183,9 +173,7 @@ class _SplashScreenState extends State<SplashScreen>
                                 child: Text(
                                   '${(_progressController.value * 100).toInt()}%',
                                   style: const TextStyle(
-                                    color: Colors.white70,
-                                    fontSize: 14,
-                                  ),
+                                      color: Colors.white70, fontSize: 14),
                                 ),
                               ),
                             ],

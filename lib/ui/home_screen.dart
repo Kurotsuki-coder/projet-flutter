@@ -1,14 +1,15 @@
+// lib/ui/home_screen.dart
+// (Me's file — unchanged)
+
 import 'package:application_meteo/core/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:application_meteo/core/theme.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -25,7 +26,6 @@ class HomeScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Spacer(),
-
               Stack(
                 alignment: Alignment.center,
                 children: [
@@ -38,70 +38,67 @@ class HomeScreen extends StatelessWidget {
                       color: Colors.amber.withOpacity(0.8),
                     ),
                   ),
-                  const Icon(
-                    Icons.cloud_outlined,
-                    size: 180,
-                    color: Colors.white,
-                  ),
+                  const Icon(Icons.cloud_outlined,
+                      size: 180, color: Colors.white),
                   Positioned(
                     bottom: 20,
                     child: Row(
-                      children: List.generate(3, (index) => const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8),
-                        child: Icon(Icons.water_drop_sharp, color: Colors.blueAccent, size: 30),
-                      )),
+                      children: List.generate(
+                        3,
+                        (index) => const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8),
+                          child: Icon(Icons.water_drop_sharp,
+                              color: Colors.blueAccent, size: 30),
+                        ),
+                      ),
                     ),
-                  )
+                  ),
                 ],
               ),
-
-            const SizedBox(height: 40),
-
-            const Text(
-              "SenMeteo",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 42,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 2,
-              ),
-            ),
-            const SizedBox(height: 10),
-            const Text(
-              "Découvrer la météo de vos villes préférées avec une expérience immersive unique.",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white70,
-                fontSize: 16,
-                height: 1.5,
-              ),
-            ),
-            const Spacer(),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
-              child: ElevatedButton(
-                onPressed: () => context.push('/splash'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppTheme.accentPurple,
-                  foregroundColor: Colors.white,
-                  minimumSize: const Size(double.infinity, 60),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  elevation: 15,
-                  shadowColor: AppTheme.accentPurple.withOpacity(0.5),
-                ),
-                child: const Text(
-                  "Commencer l'expérience",
-                  style: TextStyle(
-                    fontSize: 18,
+              const SizedBox(height: 40),
+              const Text(
+                'SenMeteo',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 42,
                     fontWeight: FontWeight.bold,
-                    letterSpacing: 1.5,
+                    letterSpacing: 2),
+              ),
+              const SizedBox(height: 10),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30),
+                child: Text(
+                  'Découvrer la météo de vos villes préférées avec une expérience immersive unique.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.white70, fontSize: 16, height: 1.5),
+                ),
+              ),
+              const Spacer(),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
+                child: ElevatedButton(
+                  onPressed: () => context.push('/splash'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppTheme.accentPurple,
+                    foregroundColor: Colors.white,
+                    minimumSize: const Size(double.infinity, 60),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
+                    elevation: 15,
+                    shadowColor: AppTheme.accentPurple.withOpacity(0.5),
+                  ),
+                  child: const Text(
+                    "Commencer l'expérience",
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.5),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
           ),
         ),
       ),
@@ -112,18 +109,10 @@ class HomeScreen extends StatelessWidget {
 class PositionPoint extends StatelessWidget {
   final double? top, right;
   final Widget child;
-  const PositionPoint({
-    super.key,
-    this.top,
-    this.right,
-    required this.child});
+  const PositionPoint({super.key, this.top, this.right, required this.child});
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      top: top,
-      right: right,
-      child: child,
-    );
+    return Positioned(top: top, right: right, child: child);
   }
 }

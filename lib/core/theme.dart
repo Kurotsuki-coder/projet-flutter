@@ -1,3 +1,5 @@
+// lib/core/theme.dart
+
 import 'package:flutter/material.dart';
 
 class AppTheme {
@@ -10,7 +12,7 @@ class AppTheme {
     brightness: Brightness.light,
     scaffoldBackgroundColor: Colors.white,
     primaryColor: bgDeep,
-    colorScheme: ColorScheme.light(
+    colorScheme: const ColorScheme.light(
       primary: bgDeep,
       secondary: accentPurple,
     ),
@@ -21,7 +23,7 @@ class AppTheme {
     brightness: Brightness.dark,
     scaffoldBackgroundColor: bgDeep,
     primaryColor: accentPurple,
-    colorScheme: ColorScheme.dark(
+    colorScheme: const ColorScheme.dark(
       primary: accentPurple,
       secondary: skyBlue,
     ),
