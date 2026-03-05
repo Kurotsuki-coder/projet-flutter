@@ -6,11 +6,11 @@ Application Flutter météo en temps réel avec cartes interactives, animations 
 
 ## 👥 Membres du Groupe
 
-| Nom     | Rôle                                        |
-|---------|---------------------------------------------|
-| Banami  | Architecte Data & API (Back-end Mobile)     |
-| Me      | Maître de l'UI & UX (Designer)              |
-| Magatte | Expert Animations & Maps (Interactif)       |
+| Nom                    | Rôle                                        |
+|------------------------|---------------------------------------------|
+| Magatte Gaye           | Expert Animations & Maps (Interactif)       |
+| Banami Da Silva Mango  | Architecte Data & API (Back-end Mobile)     |
+| Abdoul Wahab Talla     | Maître de l'UI & UX (Designer)              |
 
 ---
 
