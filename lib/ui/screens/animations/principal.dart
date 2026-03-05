@@ -1,17 +1,17 @@
-// lib/ui/screens/animations/principal.dart
-// (Magatte's file — unchanged)
-
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../core/theme.dart';
+import '../../../data/providers/theme_provider.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  ConsumerState<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
+class _SplashScreenState extends ConsumerState<SplashScreen>
     with TickerProviderStateMixin {
   late AnimationController _progressController;
   late AnimationController _fadeController;
@@ -22,36 +22,26 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
-
     _progressController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 3),
     );
-
     _fadeController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 800),
     );
-
-    _fadeAnimation =
-        Tween<double>(begin: 0.0, end: 1.0).animate(_fadeController);
-
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(_fadeController);
     _cloudFloatController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1200),
     )..repeat(reverse: true);
-
     _cloudFloat = Tween<double>(begin: -3.0, end: 3.0).animate(
       CurvedAnimation(parent: _cloudFloatController, curve: Curves.easeInOut),
     );
-
     _fadeController.forward();
     _progressController.forward();
-
     _progressController.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        context.go('/main');
-      }
+      if (status == AnimationStatus.completed) context.go('/main');
     });
   }
 
@@ -65,21 +55,13 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
+    final isLight = ref.watch(themeProvider);  // ✅
     const double iconSize = 36.0;
 
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFF1A0033),
-              Color(0xFF7B2FBE),
-              Color(0xFFC77DFF),
-            ],
-            stops: [0.0, 0.5, 1.0],
-          ),
+        decoration: BoxDecoration(
+          color: isLight ? AppTheme.lightBg1 : const Color(0xFF1A0033),
         ),
         child: FadeTransition(
           opacity: _fadeAnimation,
@@ -87,22 +69,27 @@ class _SplashScreenState extends State<SplashScreen>
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.wb_sunny_rounded,
-                    size: 100, color: Colors.amber),
+                const Icon(Icons.wb_sunny_rounded, size: 100, color: Colors.amber),
                 const SizedBox(height: 24),
-                const Text(
+                Text(
                   'SenMeteo',
                   style: TextStyle(
-                      fontSize: 36,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      letterSpacing: 2),
+                    fontSize: 36,
+                    fontWeight: FontWeight.bold,
+                    color: isLight ? AppTheme.lightText : Colors.white,
+                    letterSpacing: 2,
+                  ),
                 ),
                 const SizedBox(height: 8),
-                const Text(
-                  'Votre météo en temps reel',
+                Text(
+                  'Votre météo en temps réel',
                   style: TextStyle(
-                      fontSize: 16, color: Colors.white70, letterSpacing: 1),
+                    fontSize: 16,
+                    color: isLight
+                        ? AppTheme.lightText.withOpacity(0.65)
+                        : Colors.white70,
+                    letterSpacing: 1,
+                  ),
                 ),
                 const SizedBox(height: 60),
                 Padding(
@@ -115,9 +102,8 @@ class _SplashScreenState extends State<SplashScreen>
                         builder: (context, constraints) {
                           final barWidth = constraints.maxWidth;
                           final tipX = barWidth * _progressController.value;
-                          final iconLeft = (tipX - iconSize / 2)
-                              .clamp(0.0, barWidth - iconSize);
-
+                          final iconLeft =
+                          (tipX - iconSize / 2).clamp(0.0, barWidth - iconSize);
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -130,9 +116,13 @@ class _SplashScreenState extends State<SplashScreen>
                                     Positioned(
                                       left: iconLeft,
                                       top: 4 + _cloudFloat.value,
-                                      child: const Icon(Icons.cloud,
-                                          size: iconSize,
-                                          color: Colors.white),
+                                      child: Icon(
+                                        Icons.cloud,
+                                        size: iconSize,
+                                        color: isLight
+                                            ? AppTheme.lightBg2
+                                            : Colors.white,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -143,7 +133,9 @@ class _SplashScreenState extends State<SplashScreen>
                                   Container(
                                     height: 20,
                                     decoration: BoxDecoration(
-                                      color: Colors.white24,
+                                      color: isLight
+                                          ? AppTheme.lightBg2.withOpacity(0.2)
+                                          : Colors.white24,
                                       borderRadius: BorderRadius.circular(50),
                                     ),
                                   ),
@@ -153,12 +145,10 @@ class _SplashScreenState extends State<SplashScreen>
                                       height: 20,
                                       decoration: BoxDecoration(
                                         color: Colors.amber,
-                                        borderRadius:
-                                            BorderRadius.circular(50),
+                                        borderRadius: BorderRadius.circular(50),
                                         boxShadow: [
                                           BoxShadow(
-                                            color: Colors.amber
-                                                .withOpacity(0.5),
+                                            color: Colors.amber.withOpacity(0.5),
                                             blurRadius: 10,
                                             spreadRadius: 1,
                                           ),
@@ -172,8 +162,12 @@ class _SplashScreenState extends State<SplashScreen>
                               Center(
                                 child: Text(
                                   '${(_progressController.value * 100).toInt()}%',
-                                  style: const TextStyle(
-                                      color: Colors.white70, fontSize: 14),
+                                  style: TextStyle(
+                                    color: isLight
+                                        ? AppTheme.lightText.withOpacity(0.7)
+                                        : Colors.white70,
+                                    fontSize: 14,
+                                  ),
                                 ),
                               ),
                             ],

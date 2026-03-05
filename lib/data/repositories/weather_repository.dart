@@ -1,5 +1,3 @@
-// lib/data/repositories/weather_repository.dart
-
 import 'package:dartz/dartz.dart';
 import '../../core/errors/failures.dart';
 import '../models/weather_model.dart';

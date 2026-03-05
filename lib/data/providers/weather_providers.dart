@@ -1,5 +1,3 @@
-// lib/data/providers/weather_providers.dart
-
 import 'package:dartz/dartz.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -40,7 +38,7 @@ final allCitiesWeatherProvider =
 
 /// Single city fetch. Used by CityDetailScreen for live data.
 final singleCityWeatherProvider =
-    FutureProvider.family<Either<Failure, WeatherModel>, String>(
-  (ref, cityName) =>
-      ref.read(weatherRepositoryProvider).getWeatherForCity(cityName),
+FutureProvider.family<Either<Failure, WeatherModel>, String>(
+      (ref, cityName) =>
+      ref.watch(weatherRepositoryProvider).getWeatherForCity(cityName),
 );

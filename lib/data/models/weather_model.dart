@@ -1,5 +1,3 @@
-// lib/data/models/weather_model.dart
-
 import 'package:equatable/equatable.dart';
 
 class WeatherModel extends Equatable {

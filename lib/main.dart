@@ -1,5 +1,3 @@
-// lib/main.dart
-
 import 'package:application_meteo/ui/screens/animations/principal.dart';
 import 'package:application_meteo/ui/screens/animations/transition.dart';
 import 'package:application_meteo/ui/screens/detail/city_detail_screen.dart';

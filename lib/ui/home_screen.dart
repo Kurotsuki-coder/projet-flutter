@@ -1,25 +1,22 @@
-// lib/ui/home_screen.dart
-// (Me's file — unchanged)
-
 import 'package:application_meteo/core/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../data/providers/theme_provider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isLight = ref.watch(themeProvider);
+
     return Scaffold(
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [AppTheme.bgDeep, Color(0xFF2D0054), AppTheme.bgDeep],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
+        decoration: BoxDecoration(
+          color: isLight ? AppTheme.lightBg1 : AppTheme.bgDeep,
         ),
         child: SafeArea(
           child: Column(
@@ -38,14 +35,17 @@ class HomeScreen extends StatelessWidget {
                       color: Colors.amber.withOpacity(0.8),
                     ),
                   ),
-                  const Icon(Icons.cloud_outlined,
-                      size: 180, color: Colors.white),
+                  Icon(
+                    Icons.cloud_outlined,
+                    size: 180,
+                    color: isLight ? AppTheme.lightBg2 : Colors.white,
+                  ),
                   Positioned(
                     bottom: 20,
                     child: Row(
                       children: List.generate(
                         3,
-                        (index) => const Padding(
+                            (index) => const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 8),
                           child: Icon(Icons.water_drop_sharp,
                               color: Colors.blueAccent, size: 30),
@@ -56,45 +56,55 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 40),
-              const Text(
+              Text(
                 'SenMeteo',
                 style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 42,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 2),
+                  color: isLight ? AppTheme.lightText : Colors.white,
+                  fontSize: 42,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 2,
+                ),
               ),
               const SizedBox(height: 10),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Text(
-                  'Découvrer la météo de vos villes préférées avec une expérience immersive unique.',
+                  'Découvrez la météo de vos villes préférées avec une expérience immersive unique.',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      color: Colors.white70, fontSize: 16, height: 1.5),
+                    color: isLight
+                        ? AppTheme.lightText.withOpacity(0.65)
+                        : Colors.white70,
+                    fontSize: 16,
+                    height: 1.5,
+                  ),
                 ),
               ),
               const Spacer(),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
+                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
                 child: ElevatedButton(
                   onPressed: () => context.push('/splash'),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppTheme.accentPurple,
+                    backgroundColor:
+                    isLight ? AppTheme.lightBg2 : AppTheme.accentPurple,
                     foregroundColor: Colors.white,
                     minimumSize: const Size(double.infinity, 60),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)),
                     elevation: 15,
-                    shadowColor: AppTheme.accentPurple.withOpacity(0.5),
+                    shadowColor: AppTheme.lightBg2.withOpacity(0.5),
                   ),
-                  child: const Text(
-                    "Commencer l'expérience",
-                    style: TextStyle(
+                  child: const FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      "Commencer l'expérience",
+                      style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        letterSpacing: 1.5),
+                        letterSpacing: 1.5,
+                      ),
+                    ),
                   ),
                 ),
               ),
